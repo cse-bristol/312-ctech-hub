@@ -8,7 +8,7 @@ User=pi
 Restart=always
 RestartSec=3
 
-ExecStart=/usr/bin/node /home/pi/databox-driver-wirelessthings/app.js
+ExecStart=/usr/bin/node /home/pi/ctech-hub/app.js
 
 [Install]
 WantedBy=multi-user.target
