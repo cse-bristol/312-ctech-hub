@@ -1,6 +1,5 @@
 var lhelper = require('./llap_helper');
 var request = require('request');
-var databox_directory = require('../utils/databox_directory.js');
 
 var DATASTORE_TIMESERIES_ENDPOINT = process.env.DATASTORE_TIMESERIES_ENDPOINT;
 
@@ -15,16 +14,23 @@ function saveReading(llap_code,value) {
   var theurl = "https://e-genie.co.uk/sd_store/rawinput/sensor/" + llap_code + "/TEMP/data/";
   var thebody = "key=05e7d19a6d002118deef70d21ff4226e&value=" + value;
   console.log(thebody);
+  try{
+  	request.post({
+  		headers: {'content-type' : 'application/x-www-form-urlencoded'},
+  		url:     theurl,
+  		body:    thebody
+	}, 	function(error, response, body){
+  			console.log(body);
+		});
 
-  request.post({
-  headers: {'content-type' : 'application/x-www-form-urlencoded'},
-  url:     theurl,
-  body:    thebody
-}, function(error, response, body){
-  console.log(body);
-});
+  }
+
+  catch (err) {
+
+  	console.log(err)
+  }
+  
 }
-
 
 exports.onDataOverSerial = function(data){
 		var payload = data.toString();
@@ -38,7 +44,12 @@ exports.onDataOverSerial = function(data){
 			switch(llap_code) {
 				case "TMPA":
 					saveReading(device_id,sensor_value);
-					break
+					break;
+
+				case "TEMP":
+					saveReading(device_id,sensor_value);
+					break;
+
 				default: 
 					break;
 			}
