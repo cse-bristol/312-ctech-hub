@@ -21,7 +21,7 @@ function saveReading(device_id,llap_code, value) {
       url:     theurl,
       body:    thebody
     }, 	function(error, response, body){
-      console.log("Response for", device_id, value, "=", body);
+      console.log("Response for", device_id, llap_code, value, "=", body);
     });
 
   }
