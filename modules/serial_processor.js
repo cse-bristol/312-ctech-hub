@@ -15,36 +15,42 @@ var magic_key = "05e7d19a6d002118deef70d21ff4226e";
 function saveReading(device_id,value) {
   var theurl = base_url + "sd_store/rawinput/sensor/" + device_id + "/TEMP/data/";
   var thebody = "key=" + magic_key + "&value=" + value;
-  console.log(thebody);
   try{
-  	request.post({
-  		headers: {'content-type' : 'application/x-www-form-urlencoded'},
-  		url:     theurl,
-  		body:    thebody
-	}, 	function(error, response, body){
-  			console.log(body);
-		});
+    request.post({
+      headers: {'content-type' : 'application/x-www-form-urlencoded'},
+      url:     theurl,
+      body:    thebody
+    }, 	function(error, response, body){
+      console.log("Response for", device_id, value);
+      console.log(body);
+    });
 
   }
 
   catch (err) {
-
-  	console.log(err)
+    console.log("Error posting", device_id, value);
+    console.log(err);
   }
   
 }
 
 exports.onDataOverSerial = function(data){
-		var payload = data.toString();
-		console.log(payload);
-		if (lhelper.isValid(payload)) {
-			var message = lhelper.message(payload);
-			var device_id = lhelper.deviceName(payload);
-			var llap_code = message.substring(0,4);
-			var sensor_value = message.substring(4);
-                        saveReading(device_id,sensor_value);
-		}
-			
+  var payload = data.toString();
+  console.log("Serial received: ", payload);
+  if (lhelper.isValid(payload)) {
+    var message = lhelper.message(payload);
+    var device_id = lhelper.deviceName(payload);
+    var llap_code = message.substring(0,4);
+    var sensor_value = message.substring(4);
+    console.log("Message:", message);
+    console.log("Device ID:", device_id);
+    console.log("LLAP code:", llap_code);
+    console.log("Sensor value:", sensor_value);
+    saveReading(device_id,sensor_value);
+  } else {
+    console.log("  Payload invalid");
+  }
+  
 };
 
 
