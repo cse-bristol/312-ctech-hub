@@ -12,8 +12,8 @@ var all_registered = false;
 var base_url = "http://egenie.r.cse.org.uk/";
 var magic_key = "05e7d19a6d002118deef70d21ff4226e";
 
-function saveReading(device_id,value) {
-  var theurl = base_url + "sd_store/rawinput/sensor/" + device_id + "/TEMP/data/";
+function saveReading(device_id,llap_code, value) {
+  var theurl = base_url + "sd_store/rawinput/sensor/" + device_id + "/" + llap_code + "/data/";
   var thebody = "key=" + magic_key + "&value=" + value;
   try{
     request.post({
@@ -45,7 +45,7 @@ exports.onDataOverSerial = function(data){
     console.log("Device ID:", device_id);
     console.log("LLAP code:", llap_code);
     console.log("Sensor value:", sensor_value);
-    saveReading(device_id,sensor_value);
+    saveReading(device_id, llap_code, sensor_value);
   } else {
     console.log("  Payload invalid");
   }
