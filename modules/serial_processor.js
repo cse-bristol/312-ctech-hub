@@ -21,8 +21,7 @@ function saveReading(device_id,value) {
       url:     theurl,
       body:    thebody
     }, 	function(error, response, body){
-      console.log("Response for", device_id, value);
-      console.log(body);
+      console.log("Response for", device_id, value, "=", body);
     });
 
   }
