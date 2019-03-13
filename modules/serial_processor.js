@@ -9,10 +9,12 @@ var datastore_id;
 var sensor_types = [];
 var registered_sensors = [];
 var all_registered = false;
+var base_url = "http://egenie.r.cse.org.uk/";
+var magic_key = "05e7d19a6d002118deef70d21ff4226e";
 
-function saveReading(llap_code,value) {
-  var theurl = "https://e-genie.co.uk/sd_store/rawinput/sensor/" + llap_code + "/TEMP/data/";
-  var thebody = "key=05e7d19a6d002118deef70d21ff4226e&value=" + value;
+function saveReading(device_id,value) {
+  var theurl = base_url + "sd_store/rawinput/sensor/" + device_id + "/TEMP/data/";
+  var thebody = "key=" + magic_key + "&value=" + value;
   console.log(thebody);
   try{
   	request.post({
