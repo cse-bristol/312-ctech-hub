@@ -42,19 +42,7 @@ exports.onDataOverSerial = function(data){
 			var device_id = lhelper.deviceName(payload);
 			var llap_code = message.substring(0,4);
 			var sensor_value = message.substring(4);
-
-			switch(llap_code) {
-				case "TMPA":
-					saveReading(device_id,sensor_value);
-					break;
-
-				case "TEMP":
-					saveReading(device_id,sensor_value);
-					break;
-
-				default: 
-					break;
-			}
+                        saveReading(device_id,sensor_value);
 		}
 			
 };
