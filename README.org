@@ -1,0 +1,19 @@
+#+TITLE: CTECH hub for Egenie
+
+* Installation steps
+- install jessie-lite
+- enable ssh with raspi config
+- clone this repo
+- install nodejs
+- run npm install in the checkout directory
+- add user pi to group dialout:  usermod -a -G dialout pi
+
+  This is needed for radio access
+- copy ctech.service to /etc/systemd/system
+- update directory in service file to point to app.js
+- edit ~modules/serial_processor.js~; you will need to change:
+  - ~base_url~ to have the address of your egenie server
+  - ~magic_key~ to be a rawdata key that your egenie server has set up in its management interface
+- run systemctl enable ctech.service
+
+
